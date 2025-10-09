@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Discovery Guide | Pepper's Spicy Business</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6B46C1 0%, #9333EA 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .nav a {
+            color: #6B46C1;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav a:hover {
+            opacity: 0.7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .intro h2 {
+            color: #6B46C1;
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7BDED9 0%, #10B981 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-box h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .cta-box p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #6B46C1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature-card h3 {
+            color: #6B46C1;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #4b5563;
+        }
+
+        .chapters-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .chapters-list h2 {
+            color: #6B46C1;
+            margin-bottom: 1.5rem;
+        }
+
+        .chapter-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #7BDED9;
+        }
+
+        .chapter-item strong {
+            color: #1f2937;
+        }
+
+        .alert {
+            background: #FEF3C7;
+            border-left: 5px solid #F59E0B;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .alert strong {
+            color: #92400E;
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #7BDED9;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav {
+                padding: 1rem;
+            }
+
+            .nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🌶️ Business Discovery Workbook</h1>
+        <p>The Big Picture Guide for Independent Entrepreneurs</p>
+    </header>
+
+    <nav class="nav">
+        <a href="/">Party Guide</a>
+        <a href="/card-processing/">Payment Processing</a>
+        <a href="/business-discovery/">Business Discovery</a>
+        <a href="https://prosales.peppersparties.com" target="_blank">Academy</a>
+    </nav>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Discover, Plan, and Build Your Independent Business</h2>
+            <p>Whether you're transitioning from a legacy business model or starting fresh as a solopreneur, this comprehensive 12-chapter workbook will help you define your business, identify your strengths, and create a roadmap for success.</p>
+            
+            <p><strong>Perfect for:</strong></p>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>Former consultants building independent businesses</li>
+                <li>New solopreneurs in adult wellness/party planning</li>
+                <li>Current independents looking to professionalize</li>
+                <li>Anyone seeking clarity on their business direction</li>
+            </ul>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>💾 Auto-Save</h3>
+                <p>Your progress saves automatically every 30 seconds. Never lose your work!</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 Export to CSV</h3>
+                <p>Download your completed answers to review, share, or import later.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📈 Progress Tracking</h3>
+                <p>Visual progress bar shows how much you've completed at a glance.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔄 Pick Up Anytime</h3>
+                <p>Return whenever you want—your answers are saved in your browser.</p>
+            </div>
+        </div>
+
+        <div class="chapters-list">
+            <h2>What You'll Discover (12 Chapters)</h2>
+            
+            <div class="chapter-item">
+                <strong>Chapter 0:</strong> Your Starting Point - Where are you in your entrepreneurial journey?
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 1:</strong> The "Who, What, and Why" - Define your business purpose and ideal clients
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 2:</strong> Contact Info - Make it easy for customers to reach you
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 3:</strong> Logistics - Where, when, and how you operate (including payment processing!)
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 4:</strong> Benefits & Features - What you really offer to customers
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 5:</strong> Branding - Your business dating profile (colors, vibe, messaging)
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 6:</strong> What Makes You Special - Your unique selling proposition
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 7:</strong> Social Media - Where and how to connect with customers
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 8:</strong> Technology Tools - POS, CRM, website, and integration needs
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 9:</strong> Goals & Tracking - Set targets and measure success
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 10:</strong> Value & Loyalty - Keep customers coming back
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 11:</strong> Business Assets - Content, photos, policies you need
+            </div>
+            <div class="chapter-item">
+                <strong>Chapter 12:</strong> Next Steps - Turn insights into action
+            </div>
+        </div>
+
+        <div class="alert">
+            <strong>💡 Pro Tip:</strong><br>
+            This workbook pairs perfectly with the <a href="/card-processing/" style="color: #6B46C1; font-weight: 600;">Payment Processing Guide</a>. Complete both to get a comprehensive view of your business infrastructure needs!
+        </div>
+
+        <div class="cta-box">
+            <h2>Ready to Build Your Business Foundation?</h2>
+            <p>This interactive workbook takes 60-90 minutes to complete. You can save your progress and return anytime.</p>
+            <a href="form.html" class="btn">Start Your Discovery Journey →</a>
+        </div>
+
+        <div class="intro">
+            <h2>How It Works</h2>
+            <ol style="margin-left: 2rem; line-height: 2;">
+                <li><strong>Click "Start Your Discovery Journey"</strong> above to open the interactive form</li>
+                <li><strong>Answer questions at your own pace</strong> - your progress saves automatically</li>
+                <li><strong>Export your answers</strong> to CSV when complete</li>
+                <li><strong>Use your insights</strong> to guide business decisions and planning</li>
+            </ol>
+            
+            <p style="margin-top: 1.5rem;">💾 <strong>Pro Tip:</strong> Keep your exported CSV file for reference during business planning meetings, when applying for processors, or when working with advisors.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Pepper's Parties | Educationally Entertaining Since 1996</p>
+        <div class="footer-links">
+            <a href="https://peppersparties.com" target="_blank">Main Site</a>
+            <a href="https://pepperspartiestoo.net" target="_blank">Spicy Boutique</a>
+            <a href="https://jmpepper.com" target="_blank">POS Training</a>
+            <a href="https://prosales.peppersparties.com" target="_blank">Academy</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">For adults 18+ only</p>
+    </footer>
+</body>
+</html>

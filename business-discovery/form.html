@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovering Your Business - The Big Picture</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 1px solid #dee2e6;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #495057;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .nav-link.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .chapter {
+            display: none;
+        }
+
+        .chapter.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter h2 {
+            color: #007bff;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .form-group .help-text {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .actions {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .progress {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .joke-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #f39c12;
+        }
+
+        .joke-box h4 {
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .nav-menu {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .nav-item {
+                flex: 1;
+                min-width: 150px;
+                margin-bottom: 0;
+            }
+            
+            .nav-link {
+                text-align: center;
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .actions {
+                position: static;
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Discovering Your Business</h1>
+            <p>The Big Picture Guide for Savvy Mobile Sales Pros</p>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-chapter="chapter1">
+                            1. Who, What & Why
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter2">
+                            2. Contact Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter3">
+                            3. Logistics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter4">
+                            4. Benefits & Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter5">
+                            5. Branding
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter6">
+                            6. What Makes You Special
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter7">
+                            7. Social Media
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter8">
+                            8. Technology Tools
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter9">
+                            9. Goals & Tracking
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter10">
+                            10. Value & Loyalty
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter11">
+                            11. Business Assets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-chapter="chapter12">
+                            12. Next Steps
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <form id="businessForm" onsubmit="return false;">
+                <!-- Chapter 1: Who, What & Why -->
+                <div class="chapter active" id="chapter1">
+                    <h2>Chapter 1: The "Who, What, and Why" of Your Biz</h2>
+                    <div class="alert alert-info">
+                        <strong>Welcome!</strong> Let's discover the business and the YOU behind your entrepreneurial journey. Don't worry if you don't have all the answers yet - this is your journey of discovery!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessDescription">What exactly do you do?</label>
+                        <div class="help-text">Are you a party-plan pro, boutique owner, event pop-up queen, drop-ship daredevil, or all the above?</div>
+                        <textarea class="form-control" id="businessDescription" placeholder="Describe your business in your own words..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessDescriptionFormal">The "boring" description for legal/tax/website purposes</label>
+                        <textarea class="form-control" id="businessDescriptionFormal" placeholder="The official business description..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idealClient">Who do you do it for?</label>
+                        <div class="help-text">Describe your ideal clients - age, interests, needs. Get specific!</div>
+                        <textarea class="form-control" id="idealClient" placeholder="My ideal customers are..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessNeed">What need does your business fill?</label>
+                        <div class="help-text">Are you solving a problem, sparking confidence, improving relationships, or making Tuesday nights more interesting?</div>
+                        <textarea class="form-control" id="businessNeed" placeholder="My business helps people by..."></textarea>
+                    </div>
+
+                    <div class="joke-box">
+                        <h4>Dad Joke Break! 😄</h4>
+                        <p>If you say "I sell fun," and someone asks "what kind?"—hand them your business card and watch their face!</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 2: Contact Info -->
+                <div class="chapter" id="chapter2">
+                    <h2>Chapter 2: Making Contact</h2>
+                    <div class="alert alert-info">
+                        <strong>Remember:</strong> If it's not easy to find, it might as well not exist. Let's make sure people can reach you!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" class="form-control" id="businessName" placeholder="Your awesome business name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactName">Your Name</label>
+                        <input type="text" class="form-control" id="contactName" placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="(555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="you@yourbusiness.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website">Website URL</label>
+                        <input type="url" class="form-control" id="website" placeholder="https://yourbusiness.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="socialHandles">Social Media Handles</label>
+                        <div class="help-text">List your Instagram, Facebook, TikTok, etc.</div>
+                        <textarea class="form-control" id="socialHandles" placeholder="Instagram: @yourbusiness&#10;Facebook: /yourbusiness&#10;TikTok: @yourbusiness"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="otherContact">Other Contact Methods</label>
+                        <div class="help-text">Messenger, WhatsApp, carrier pigeons, smoke signals...</div>
+                        <textarea class="form-control" id="otherContact" placeholder="Any other ways people can reach you..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Chapter 3: Logistics -->
+                <div class="chapter" id="chapter3">
+                    <h2>Chapter 3: Where, When, and How</h2>
+                    <div class="alert alert-info">
+                        <strong>The Logistics Lowdown:</strong> Let's figure out the practical side of your business operations.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessHours">Business Hours</label>
+                        <div class="help-text">Are you "by appointment only" or "open all hours"?</div>
+                        <textarea class="form-control" id="businessHours" placeholder="Monday-Friday 9am-5pm, or by appointment..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessLocations">Locations</label>
+                        <div class="help-text">Brick-and-mortar, mobile setup, or "pop up where I please"?</div>
+                        <textarea class="form-control" id="businessLocations" placeholder="Home-based, mobile parties, popup locations..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="websiteRole">Website Role</label>
+                        <div class="help-text">Digital showroom, order-taker, or full-on virtual party?</div>
+                        <textarea class="form-control" id="websiteRole" placeholder="My website serves as..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weakPoints">Current Weak Points</label>
+                        <div class="help-text">Are you harder to reach than a cat at bath time after 8 pm? Website slower than dial-up?</div>
+                        <textarea class="form-control" id="weakPoints" placeholder="Areas I need to improve..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceAreas">Service Areas</label>
+                        <div class="help-text">Where do you travel for parties or deliveries?</div>
+                        <textarea class="form-control" id="serviceAreas" placeholder="Cities, regions, or distance you'll travel..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Chapter 4: Benefits & Features -->
+                <div class="chapter" id="chapter4">
+                    <h2>Chapter 4: Benefits and Features</h2>
+                    <div class="alert alert-info">
+                        <strong>Not Just "It's Pink and Buzzes":</strong> Let's dive into what really matters to your customers.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerBenefits">Real Benefits for Your Customers</label>
+                        <div class="help-text">Discretion, education, fun, fast delivery, personal guidance, curated picks...</div>
+                        <textarea class="form-control" id="customerBenefits" placeholder="My customers get..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productFeatures">Product Features</label>
+                        <div class="help-text">Product specs, warranties, exclusive access, loyalty programs, etc.</div>
+                        <textarea class="form-control" id="productFeatures" placeholder="Features of my products/services..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exclusiveOffers">Exclusive Offers</label>
+                        <div class="help-text">What special deals or access do you provide?</div>
+                        <textarea class="form-control" id="exclusiveOffers" placeholder="Special offers I provide..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerSupport">Customer Support</label>
+                        <div class="help-text">How do you support customers before, during, and after purchase?</div>
+                        <textarea class="form-control" id="customerSupport" placeholder="I support my customers by..."></textarea>
+                    </div>
+
+                    <div class="joke-box">
+                        <h4>Dad Joke Alert! 🔋</h4>
+                        <p>"We offer batteries included… because we believe in *fully* charged relationships!"</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 5: Branding -->
+                <div class="chapter" id="chapter5">
+                    <h2>Chapter 5: Branding - Your Business Dating Profile</h2>
+                    <div class="alert alert-info">
+                        <strong>Time to Define Your Vibe:</strong> If your business was on a dating app, what would it say?
+                    </div>
+
+                    <div class="form-group">
+                        <label for="brandWords">30 Words That Describe Your Business</label>
+                        <div class="help-text">Think: sexy, fun, discreet, wellness, confidence booster, empowerment, spicy not scary...</div>
+                        <textarea class="form-control" id="brandWords" placeholder="Separate with commas: fun, empowering, discreet, educational..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="elevatorPitch">Your 25-Word Pitch</label>
+                        <div class="help-text">For Google, business cards, and awkward "So, what do you do?" moments</div>
+                        <textarea class="form-control" id="elevatorPitch" placeholder="I help [who] achieve [what] through [how]..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessSlogan">Your Slogan Ideas</label>
+                        <div class="help-text">Brainstorm three! Examples: "Adding a Little Spice to Your Life" or "Educationally Entertaining Since 1996"</div>
+                        <textarea class="form-control" id="businessSlogan" placeholder="Slogan idea 1:&#10;Slogan idea 2:&#10;Slogan idea 3:"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="brandPersonality">Brand Personality</label>
+                        <div class="help-text">How do you want customers to feel when they interact with your brand?</div>
+                        <textarea class="form-control" id="brandPersonality" placeholder="My brand makes people feel..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="brandColors">Brand Colors & Style</label>
+                        <div class="help-text">What colors and visual style represent your brand?</div>
+                        <input type="text" class="form-control" id="brandColors" placeholder="Pink and gold, minimalist, bold and vibrant...">
+                    </div>
+                </div>
+
+                <!-- Chapter 6: USP -->
+                <div class="chapter" id="chapter6">
+                    <h2>Chapter 6: What Makes You Special?</h2>
+                    <div class="alert alert-info">
+                        <strong>Besides Your Dance Moves:</strong> Let's identify what makes you the go-to choice in your market.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usp">Your Unique Selling Proposition (USP)</label>
+                        <div class="help-text">What makes you THE choice? Expertise? Curated products? Humor? Discretion? Lightning-fast shipping?</div>
+                        <textarea class="form-control" id="usp" placeholder="What makes me different and better..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="competitiveAdvantage">How You Beat the Competition</label>
+                        <div class="help-text">Why should customers stop scrolling and buy from YOU? Loyalty programs, bonuses, "no awkward mall experiences"?</div>
+                        <textarea class="form-control" id="competitiveAdvantage" placeholder="Customers choose me because..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expertise">Your Special Expertise</label>
+                        <div class="help-text">What do you know that others don't? What experience do you bring?</div>
+                        <textarea class="form-control" id="expertise" placeholder="My expertise includes..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerExperience">Unique Customer Experience</label>
+                        <div class="help-text">What's special about the experience of buying from you?</div>
+                        <textarea class="form-control" id="customerExperience" placeholder="When customers buy from me, they experience..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guarantees">Guarantees & Promises</label>
+                        <div class="help-text">What can customers count on when they work with you?</div>
+                        <textarea class="form-control" id="guarantees" placeholder="I guarantee my customers..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Chapter 7: Social Media -->
+                <div class="chapter" id="chapter7">
+                    <h2>Chapter 7: The "Digital Dazzle" - Social Media & Beyond</h2>
+                    <div class="alert alert-info">
+                        <strong>Welcome to the True Party:</strong> Where hashtags, memes, and TikToks rule the night! Social media isn't just word-of-mouth—it's your megaphone.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="targetPlatforms">Where Your Customers Hang Out</label>
+                        <div class="help-text">Facebook? Instagram? TikTok? That new app you heard about on NPR?</div>
+                        <textarea class="form-control" id="targetPlatforms" placeholder="My customers are most active on..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="socialBrandVibe">Your Social Media Brand Vibe</label>
+                        <div class="help-text">Sassy? Supportive? Strictly professional? Educationally entertaining with dad jokes?</div>
+                        <textarea class="form-control" id="socialBrandVibe" placeholder="My social media personality is..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contentTypes">Types of Posts You'll Share</label>
+                        <div class="help-text">Tips, testimonials, product demos, live Q&As, memes, spicy stories, giveaways?</div>
+                        <textarea class="form-control" id="contentTypes" placeholder="I plan to post..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postingSchedule">Posting Schedule</label>
+                        <div class="help-text">Consistency is queen! How often will you post?</div>
+                        <input type="text" class="form-control" id="postingSchedule" placeholder="Daily, 3x per week, etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="engagementStrategy">Engagement Strategy</label>
+                        <div class="help-text">How will you respond to comments and DMs? (Remember: ghosting is only cool on Halloween!)</div>
+                        <textarea class="form-control" id="engagementStrategy" placeholder="I will engage with my audience by..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstSocialPost">Your First "Educationally Entertaining" Post</label>
+                        <div class="help-text">Write a post introducing your brand (don't forget a call to action!)</div>
+                        <textarea class="form-control" id="firstSocialPost" placeholder="Hey everyone! I'm excited to introduce..."></textarea>
+                    </div>
+
+                    <div class="joke-box">
+                        <h4>Dad Joke Time! 📱</h4>
+                        <p>Why did the social media manager break up with their calendar? Because they felt they were being *posted* about too much!</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 8: Technology -->
+                <div class="chapter" id="chapter8">
+                    <h2>Chapter 8: The "Why" Behind the Tech</h2>
+                    <div class="alert alert-info">
+                        <strong>Choosing Tools That Shape Your Business:</strong> Early tech decisions set your future workflow and sanity level!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentTools">Current Tools Assessment</label>
+                        <div class="help-text">List your POS, CRM, website, email platform, social tools. Rate each as "friend," "frenemy," or "dumpster fire."</div>
+                        <textarea class="form-control" id="currentTools" placeholder="Tool: Rating&#10;Website: Friend&#10;Email platform: Frenemy..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="integrationNeeds">Integration Needs</label>
+                        <div class="help-text">What tools need to talk to each other? (Integration = Less Stress)</div>
+                        <textarea class="form-control" id="integrationNeeds" placeholder="I need my POS to connect to..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trackingNeeds">Customer Behavior Tracking</label>
+                        <div class="help-text">What do you want to know about your customers' behavior?</div>
+                        <textarea class="form-control" id="trackingNeeds" placeholder="I want to track..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="automationGoals">Automation Goals</label>
+                        <div class="help-text">What emails, receipts, follow-ups could be automated?</div>
+                        <textarea class="form-control" id="automationGoals" placeholder="I want to automate..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scalePrep">Preparing for Scale</label>
+                        <div class="help-text">What happens if you sell out in an hour thanks to a viral TikTok?</div>
+                        <textarea class="form-control" id="scalePrep" placeholder="If I suddenly get huge, I need..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="techBudget">Technology Budget</label>
+                        <div class="help-text">What can you afford to spend on tools monthly?</div>
+                        <input type="text" class="form-control" id="techBudget" placeholder="$50/month, $200/month, etc.">
+                    </div>
+                </div>
+
+                <!-- Chapter 9: Goals -->
+                <div class="chapter" id="chapter9">
+                    <h2>Chapter 9: Setting Goals, Tracking Progress</h2>
+                    <div class="alert alert-info">
+                        <strong>The Not-So-Sexy Secret to Longevity:</strong> Let's set some goals that'll keep you motivated and on track!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shortTermGoals">Short-Term Goals (Next 90 Days)</label>
+                        <div class="help-text">Book 4 parties this month, grow email list by 25, post twice weekly on Instagram...</div>
+                        <textarea class="form-control" id="shortTermGoals" placeholder="In the next 90 days, I will..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="longTermGoals">Long-Term Goals (1 Year)</label>
+                        <div class="help-text">1,000 loyal customers, a viral post, recurring revenue from subscription box...</div>
+                        <textarea class="form-control" id="longTermGoals" placeholder="In the next year, I want to achieve..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="successMetrics">How You'll Measure Success</label>
+                        <div class="help-text">Website visits, sales volume, repeat customers, email signups, social engagement?</div>
+                        <textarea class="form-control" id="successMetrics" placeholder="I'll know I'm successful when..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trackingMethod">How You'll Track Progress</label>
+                        <div class="help-text">Spreadsheets, apps, sticky notes on the fridge?</div>
+                        <textarea class="form-control" id="trackingMethod" placeholder="I will track my progress using..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewSchedule">Goal Review Schedule</label>
+                        <div class="help-text">When will you check in on your progress?</div>
+                        <input type="text" class="form-control" id="reviewSchedule" placeholder="Weekly, monthly, quarterly...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accountabilityPartner">Accountability Partner</label>
+                        <div class="help-text">Who will help keep you on track?</div>
+                        <input type="text" class="form-control" id="accountabilityPartner" placeholder="Business coach, mentor, business buddy...">
+                    </div>
+                </div>
+
+                <!-- Chapter 10: Value & Loyalty -->
+                <div class="chapter" id="chapter10">
+                    <h2>Chapter 10: Value-Add & Loyalty</h2>
+                    <div class="alert alert-info">
+                        <strong>Why Should They Come Back for More?</strong> Let's create irresistible reasons for customers to return and refer!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freeGifts">Free Gifts & Bonuses</label>
+                        <div class="help-text">What can you give that adds value without breaking the bank?</div>
+                        <textarea class="form-control" id="freeGifts" placeholder="I offer these free gifts/bonuses..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exclusiveContent">Exclusive Content</label>
+                        <div class="help-text">Special tips, guides, or insider information for customers?</div>
+                        <textarea class="form-control" id="exclusiveContent" placeholder="My customers get exclusive access to..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="earlyAccess">Early Access Programs</label>
+                        <div class="help-text">New products, sales, or special events?</div>
+                        <textarea class="form-control" id="earlyAccess" placeholder="I give early access to..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="referralProgram">Referral Rewards</label>
+                        <div class="help-text">How do you reward customers who bring friends?</div>
+                        <textarea class="form-control" id="referralProgram" placeholder="When customers refer friends, they get..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loyaltyProgram">Loyalty Program</label>
+                        <div class="help-text">Points, tiers, special status for repeat customers?</div>
+                        <textarea class="form-control" id="loyaltyProgram" placeholder="My loyalty program offers..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="surpriseDelights">Surprise & Delight Moments</label>
+                        <div class="help-text">Unexpected touches that make customers say "Wow!"</div>
+                        <textarea class="form-control" id="surpriseDelights" placeholder="I surprise customers by..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Chapter 11: Assets -->
+                <div class="chapter" id="chapter11">
+                    <h2>Chapter 11: Business Assets & Content</h2>
+                    <div class="alert alert-info">
+                        <strong>Gathering Your Digital Toolbox:</strong> Let's inventory what you have and what you need to create!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPhotos">Product Photos</label>
+                        <div class="help-text">What do you have? What do you need? (Make 'em pretty!)</div>
+                        <textarea class="form-control" id="productPhotos" placeholder="Current photos:&#10;Need to create:"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="testimonials">Customer Testimonials</label>
+                        <div class="help-text">Collect those "I never knew Tuesdays could be this fun!" moments</div>
+                        <textarea class="form-control" id="testimonials" placeholder="Testimonials I have:&#10;Testimonials I need to collect:"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessBio">Your Business Bio</label>
+                        <div class="help-text">Short, medium, and long versions for different uses</div>
+                        <textarea class="form-control" id="businessBio" placeholder="Write your bio in 3 lengths: Tweet, paragraph, full story..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="policies">Policies & Procedures</label>
+                        <div class="help-text">Return policy, privacy policy, terms of service, shipping info...</div>
+                        <textarea class="form-control" id="policies" placeholder="Policies I have:&#10;Policies I need to create:"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educationalContent">Educational Content</label>
+                        <div class="help-text">Tips, guides, how-tos, FAQs that establish your expertise</div>
+                        <textarea class="form-control" id="educationalContent" placeholder="Educational content I can create:"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marketingMaterials">Marketing Materials</label>
+                        <div class="help-text">Flyers, business cards, social media templates, memes...</div>
+                        <textarea class="form-control" id="marketingMaterials" placeholder="Marketing materials I have/need:"></textarea>
+                    </div>
+                </div>
+
+                <!-- Chapter 12: Next Steps -->
+                <div class="chapter" id="chapter12">
+                    <h2>Chapter 12: Next Steps - Put the "Action" in Your Attraction</h2>
+                    <div class="alert alert-success">
+                        <strong>You Made It!</strong> Time to turn all these insights into action. The business you build is as much about HOW you do it as WHAT you sell.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="immediateActions">Immediate Action Items (This Week)</label>
+                        <div class="help-text">What 3 things will you do in the next 7 days?</div>
+                        <textarea class="form-control" id="immediateActions" placeholder="This week I will:&#10;1.&#10;2.&#10;3."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monthlyReview">Monthly CEO Date Schedule</label>
+                        <div class="help-text">When will you review and adjust your answers?</div>
+                        <input type="text" class="form-control" id="monthlyReview" placeholder="First Friday of each month, last Sunday, etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="biggestInsight">Your Biggest Insight</label>
+                        <div class="help-text">What surprised you most while completing this guide?</div>
+                        <textarea class="form-control" id="biggestInsight" placeholder="My biggest realization was..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confidenceLevel">Confidence Level (1-10)</label>
+                        <div class="help-text">How confident do you feel about your business direction now?</div>
+                        <select class="form-control" id="confidenceLevel">
+                            <option value="">Select...</option>
+                            <option value="1">1 - Still figuring it out</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5 - Getting clearer</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10 - Ready to rock!</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secretSauce">Your Secret Sauce</label>
+                        <div class="help-text">What's the one thing that makes your business uniquely YOU?</div>
+                        <textarea class="form-control" id="secretSauce" placeholder="My secret sauce is..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="celebrationPlan">How You'll Celebrate</label>
+                        <div class="help-text">What will you do to celebrate completing this business discovery?</div>
+                        <textarea class="form-control" id="celebrationPlan" placeholder="I will celebrate by..."></textarea>
+                    </div>
+
+                    <div class="joke-box">
+                        <h4>Final Dad Joke! 🎉</h4>
+                        <p>Why don't secrets stay secret in the party plan business? Because word-of-mouth always gets out! (But hey, that's good for business.)</p>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <h4>🎊 Congratulations!</h4>
+                        <p>You've completed your Business Discovery journey! Remember to download your answers and schedule those monthly review dates. Business is better with a little spice - and you've got plenty!</p>
+                    </div>
+                                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn btn-primary" onclick="saveProgress(); return false;">💾 Save Progress</button>
+            <button type="button" class="btn btn-success" onclick="exportToCSV(); return false;">📊 Export to CSV</button>
+            <button type="button" class="btn btn-warning" onclick="loadData(); return false;">📂 Load Saved Data</button>
+            <button type="button" class="btn btn-danger" onclick="clearAllData(); return false;">🗑️ Clear All</button>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentChapter = 1;
+        const totalChapters = 12;
+        
+        // Form fields for each chapter
+        const formFields = {
+            chapter1: ['businessDescription', 'businessDescriptionFormal', 'idealClient', 'businessNeed'],
+            chapter2: ['businessName', 'contactName', 'phone', 'email', 'website', 'socialHandles', 'otherContact'],
+            chapter3: ['businessHours', 'businessLocations', 'websiteRole', 'weakPoints', 'serviceAreas'],
+            chapter4: ['customerBenefits', 'productFeatures', 'exclusiveOffers', 'customerSupport'],
+            chapter5: ['brandWords', 'elevatorPitch', 'businessSlogan', 'brandPersonality', 'brandColors'],
+            chapter6: ['usp', 'competitiveAdvantage', 'expertise', 'customerExperience', 'guarantees'],
+            chapter7: ['targetPlatforms', 'socialBrandVibe', 'contentTypes', 'postingSchedule', 'engagementStrategy', 'firstSocialPost'],
+            chapter8: ['currentTools', 'integrationNeeds', 'trackingNeeds', 'automationGoals', 'scalePrep', 'techBudget'],
+            chapter9: ['shortTermGoals', 'longTermGoals', 'successMetrics', 'trackingMethod', 'reviewSchedule', 'accountabilityPartner'],
+            chapter10: ['freeGifts', 'exclusiveContent', 'earlyAccess', 'referralProgram', 'loyaltyProgram', 'surpriseDelights'],
+            chapter11: ['productPhotos', 'testimonials', 'businessBio', 'policies', 'educationalContent', 'marketingMaterials'],
+            chapter12: ['immediateActions', 'monthlyReview', 'biggestInsight', 'confidenceLevel', 'secretSauce', 'celebrationPlan']
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up navigation
+            setupNavigation();
+            // Load saved data if exists
+            loadSavedData();
+            // Update progress
+            updateProgress();
+            // Auto-save functionality
+            setupAutoSave();
+        });
+
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const targetChapter = this.getAttribute('data-chapter');
+                    showChapter(targetChapter);
+                    return false;
+                });
+            });
+        }
+
+        function showChapter(chapterName) {
+            // Hide all chapters
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach(chapter => {
+                chapter.classList.remove('active');
+            });
+
+            // Show target chapter
+            const targetChapter = document.getElementById(chapterName);
+            if (targetChapter) {
+                targetChapter.classList.add('active');
+            }
+
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-chapter') === chapterName) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Update current chapter number
+            currentChapter = parseInt(chapterName.replace('chapter', ''));
+            updateProgress();
+            
+            // Smooth scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function updateProgress() {
+            const completedFields = calculateCompletedFields();
+            const totalFields = getTotalFields();
+            const percentage = Math.round((completedFields / totalFields) * 100);
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+        }
+
+        function calculateCompletedFields() {
+            let completed = 0;
+            Object.keys(formFields).forEach(chapter => {
+                formFields[chapter].forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field && field.value.trim() !== '') {
+                        completed++;
+                    }
+                });
+            });
+            return completed;
+        }
+
+        function getTotalFields() {
+            let total = 0;
+            Object.keys(formFields).forEach(chapter => {
+                total += formFields[chapter].length;
+            });
+            return total;
+        }
+
+        function setupAutoSave() {
+            // Auto-save every 30 seconds
+            setInterval(() => {
+                saveToLocalStorage();
+            }, 30000);
+
+            // Save when user types (debounced)
+            let saveTimeout;
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(() => {
+                        saveToLocalStorage();
+                        updateProgress();
+                    }, 1000);
+                });
+            });
+        }
+
+        function saveProgress() {
+            saveToLocalStorage();
+            showAlert('Progress saved successfully! 🎉', 'success');
+        }
+
+        function saveToLocalStorage() {
+            const data = {};
+            Object.keys(formFields).forEach(chapter => {
+                data[chapter] = {};
+                formFields[chapter].forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        data[chapter][fieldId] = field.value;
+                    }
+                });
+            });
+            
+            data.lastSaved = new Date().toISOString();
+            localStorage.setItem('businessDiscoveryData', JSON.stringify(data));
+        }
+
+        function loadData() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json';
+            fileInput.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            populateForm(data);
+                            showAlert('Data loaded successfully! 📂', 'success');
+                        } catch (error) {
+                            showAlert('Error loading file. Please check the file format.', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            fileInput.click();
+        }
+
+        function loadSavedData() {
+            const savedData = localStorage.getItem('businessDiscoveryData');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    populateForm(data);
+                } catch (error) {
+                    console.error('Error loading saved data:', error);
+                }
+            }
+        }
+
+        function populateForm(data) {
+            Object.keys(formFields).forEach(chapter => {
+                if (data[chapter]) {
+                    formFields[chapter].forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (field && data[chapter][fieldId] !== undefined) {
+                            field.value = data[chapter][fieldId];
+                        }
+                    });
+                }
+            });
+            updateProgress();
+        }
+
+        function exportToCSV() {
+            const data = [];
+            const headers = ['Chapter', 'Question', 'Answer'];
+            data.push(headers);
+
+            // Chapter names for reference
+            const chapterNames = {
+                chapter1: 'Who, What & Why',
+                chapter2: 'Contact Info',
+                chapter3: 'Logistics',
+                chapter4: 'Benefits & Features',
+                chapter5: 'Branding',
+                chapter6: 'What Makes You Special',
+                chapter7: 'Social Media',
+                chapter8: 'Technology Tools',
+                chapter9: 'Goals & Tracking',
+                chapter10: 'Value & Loyalty',
+                chapter11: 'Business Assets',
+                chapter12: 'Next Steps'
+            };
+
+            // Field labels for better CSV readability
+            const fieldLabels = {
+                businessDescription: 'What exactly do you do?',
+                businessDescriptionFormal: 'Formal business description',
+                idealClient: 'Who do you do it for?',
+                businessNeed: 'What need does your business fill?',
+                businessName: 'Business Name',
+                contactName: 'Your Name',
+                phone: 'Phone Number',
+                email: 'Email Address',
+                website: 'Website URL',
+                socialHandles: 'Social Media Handles',
+                otherContact: 'Other Contact Methods',
+                businessHours: 'Business Hours',
+                businessLocations: 'Locations',
+                websiteRole: 'Website Role',
+                weakPoints: 'Current Weak Points',
+                serviceAreas: 'Service Areas',
+                customerBenefits: 'Customer Benefits',
+                productFeatures: 'Product Features',
+                exclusiveOffers: 'Exclusive Offers',
+                customerSupport: 'Customer Support',
+                brandWords: '30 Words That Describe Your Business',
+                elevatorPitch: 'Your 25-Word Pitch',
+                businessSlogan: 'Your Slogan Ideas',
+                brandPersonality: 'Brand Personality',
+                brandColors: 'Brand Colors & Style',
+                usp: 'Unique Selling Proposition',
+                competitiveAdvantage: 'How You Beat the Competition',
+                expertise: 'Your Special Expertise',
+                customerExperience: 'Unique Customer Experience',
+                guarantees: 'Guarantees & Promises',
+                targetPlatforms: 'Target Social Platforms',
+                socialBrandVibe: 'Social Media Brand Vibe',
+                contentTypes: 'Types of Posts',
+                postingSchedule: 'Posting Schedule',
+                engagementStrategy: 'Engagement Strategy',
+                firstSocialPost: 'First Social Post',
+                currentTools: 'Current Tools Assessment',
+                integrationNeeds: 'Integration Needs',
+                trackingNeeds: 'Customer Behavior Tracking',
+                automationGoals: 'Automation Goals',
+                scalePrep: 'Preparing for Scale',
+                techBudget: 'Technology Budget',
+                shortTermGoals: 'Short-Term Goals',
+                longTermGoals: 'Long-Term Goals',
+                successMetrics: 'Success Metrics',
+                trackingMethod: 'Tracking Method',
+                reviewSchedule: 'Review Schedule',
+                accountabilityPartner: 'Accountability Partner',
+                freeGifts: 'Free Gifts & Bonuses',
+                exclusiveContent: 'Exclusive Content',
+                earlyAccess: 'Early Access Programs',
+                referralProgram: 'Referral Rewards',
+                loyaltyProgram: 'Loyalty Program',
+                surpriseDelights: 'Surprise & Delight Moments',
+                productPhotos: 'Product Photos',
+                testimonials: 'Customer Testimonials',
+                businessBio: 'Business Bio',
+                policies: 'Policies & Procedures',
+                educationalContent: 'Educational Content',
+                marketingMaterials: 'Marketing Materials',
+                immediateActions: 'Immediate Action Items',
+                monthlyReview: 'Monthly CEO Date Schedule',
+                biggestInsight: 'Biggest Insight',
+                confidenceLevel: 'Confidence Level',
+                secretSauce: 'Your Secret Sauce',
+                celebrationPlan: 'How You\'ll Celebrate'
+            };
+
+            Object.keys(formFields).forEach(chapter => {
+                const chapterName = chapterNames[chapter];
+                formFields[chapter].forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    const question = fieldLabels[fieldId] || fieldId;
+                    const answer = field ? field.value || '' : '';
+                    data.push([chapterName, question, answer]);
+                });
+            });
+
+            // Add metadata
+            data.push(['', '', '']);
+            data.push(['Export Info', 'Export Date', new Date().toLocaleDateString()]);
+            data.push(['Export Info', 'Export Time', new Date().toLocaleTimeString()]);
+            data.push(['Export Info', 'Completion Rate', `${Math.round((calculateCompletedFields() / getTotalFields()) * 100)}%`]);
+
+            const csvContent = data.map(row => 
+                row.map(field => `"${field.toString().replace(/"/g, '""')}"`).join(',')
+            ).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `business-discovery-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showAlert('CSV file downloaded successfully! 📊', 'success');
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone!')) {
+                localStorage.removeItem('businessDiscoveryData');
+                
+                // Clear all form fields
+                Object.keys(formFields).forEach(chapter => {
+                    formFields[chapter].forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (field) {
+                            field.value = '';
+                        }
+                    });
+                });
+                
+                updateProgress();
+                showAlert('All data has been cleared! 🗑️', 'success');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'danger' : 'success'}`;
+            alertDiv.textContent = message;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+S to save
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveProgress();
+            }
+            
+            // Arrow keys for navigation
+            if (e.altKey) {
+                if (e.key === 'ArrowRight' && currentChapter < totalChapters) {
+                    showChapter(`chapter${currentChapter + 1}`);
+                } else if (e.key === 'ArrowLeft' && currentChapter > 1) {
+                    showChapter(`chapter${currentChapter - 1}`);
+                }
+            }
+        });
+
+        // Add navigation buttons to each chapter
+        function addNavigationButtons() {
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach((chapter, index) => {
+                const chapterNumber = index + 1;
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.marginTop = '30px';
+                buttonContainer.style.textAlign = 'center';
+                
+                if (chapterNumber > 1) {
+                    const prevButton = document.createElement('button');
+                    prevButton.type = 'button';
+                    prevButton.className = 'btn btn-secondary';
+                    prevButton.textContent = '← Previous';
+                    prevButton.onclick = (e) => { e.preventDefault(); showChapter(`chapter${chapterNumber - 1}`); return false; };
+                    buttonContainer.appendChild(prevButton);
+                }
+                
+                if (chapterNumber < totalChapters) {
+                    const nextButton = document.createElement('button');
+                    nextButton.type = 'button';
+                    nextButton.className = 'btn btn-primary';
+                    nextButton.textContent = 'Next →';
+                    nextButton.style.marginLeft = '10px';
+                    nextButton.onclick = (e) => { e.preventDefault(); showChapter(`chapter${chapterNumber + 1}`); return false; };
+                    buttonContainer.appendChild(nextButton);
+                }
+                
+                chapter.appendChild(buttonContainer);
+            });
+        }
+
+        // Initialize navigation buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            addNavigationButtons();
+        });
+    </script>
+</body>
+</html>
