@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing Decision Guide | Pepper's Spicy Business</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6B46C1 0%, #9333EA 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .nav a {
+            color: #6B46C1;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            opacity: 0.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #6B46C1;
+            margin-bottom: 1.5rem;
+        }
+
+        .section h3 {
+            color: #1f2937;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #6B46C1;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question h3 {
+            color: #6B46C1;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #6B46C1;
+            background: #f9fafb;
+        }
+
+        .quiz-option.selected {
+            border-color: #6B46C1;
+            background: #EDE9FE;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #6B46C1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #9333EA;
+            transform: translateY(-2px);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #7BDED9 0%, #10B981 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .recommendation.show {
+            display: block;
+        }
+
+        .recommendation h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .pros, .cons {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .pros h4, .cons h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .pros ul, .cons ul {
+            margin-left: 1.5rem;
+        }
+
+        .action-steps {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-left: 4px solid #7BDED9;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .action-steps h3 {
+            color: #6B46C1;
+            margin-bottom: 1rem;
+        }
+
+        .action-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .action-steps li {
+            margin-bottom: 0.5rem;
+        }
+
+        .alert {
+            background: #FEF3C7;
+            border-left: 5px solid #F59E0B;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .alert strong {
+            color: #92400E;
+        }
+
+        .checkmark {
+            color: #10B981;
+        }
+
+        .xmark {
+            color: #EF4444;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        table {
+            overflow-x: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🌶️ Payment Processing Decision Guide</h1>
+        <p>Find the Right Processor for Your Business</p>
+    </header>
+
+    <nav class="nav">
+        <a href="../">Party Guide</a>
+        <a href="./">Payment Processing</a>
+        <a href="../business-discovery/">Business Discovery</a>
+        <a href="https://prosales.peppersparties.com" target="_blank">Academy</a>
+    </nav>
+
+    <div class="container">
+        <div class="section">
+            <h2>Understanding "High-Risk" Classification</h2>
+            <p>Adult products are classified as "high-risk" by payment processors due to several factors:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Higher chargeback rates:</strong> Includes "friendly fraud" where customers dispute charges when partners discover purchases</li>
+                <li><strong>Complex identity verification:</strong> Age verification requirements add compliance layers</li>
+                <li><strong>Regulatory scrutiny:</strong> Additional oversight and legal requirements</li>
+                <li><strong>Reputational concerns:</strong> Some financial institutions avoid adult product businesses</li>
+            </ul>
+            
+            <div class="alert" style="margin-top: 1.5rem;">
+                <strong>💡 What This Means for You:</strong><br>
+                Higher processing fees (typically 3-5% more than standard), potential registration fees, stricter underwriting, and possible reserve requirements. Understanding these challenges upfront helps you make informed decisions.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Processor Comparison</h2>
+            <p>Here's how the main payment processing options compare for adult product retailers:</p>
+            
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>PayPal</th>
+                            <th>Shopify</th>
+                            <th>CWA (Pepper's Partnership)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Adult Products Accepted</strong></td>
+                            <td><span class="xmark">✗</span> Limited (physical only, US)</td>
+                            <td><span class="checkmark">✓</span> Platform yes, Payments no</td>
+                            <td><span class="checkmark">✓</span> Full acceptance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geographic Scope</strong></td>
+                            <td>US only for physical goods</td>
+                            <td>Varies by processor</td>
+                            <td>US + expanded options</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Digital Products</strong></td>
+                            <td><span class="xmark">✗</span> Prohibited</td>
+                            <td>Requires 3rd party</td>
+                            <td><span class="checkmark">✓</span> Accepted</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Processing Fees</strong></td>
+                            <td>Standard + risk premium</td>
+                            <td>Requires 3rd party rates</td>
+                            <td>Competitive + dual pricing option</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile/Party Sales</strong></td>
+                            <td><span class="xmark">✗</span> Limited</td>
+                            <td><span class="checkmark">✓</span> Good with 3rd party</td>
+                            <td><span class="checkmark">✓✓</span> Optimized</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Free Equipment</strong></td>
+                            <td><span class="xmark">✗</span></td>
+                            <td><span class="xmark">✗</span></td>
+                            <td><span class="checkmark">✓</span> Upon approval</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fast Funding</strong></td>
+                            <td>Standard (3-5 days)</td>
+                            <td>Varies by processor</td>
+                            <td><span class="checkmark">✓</span> Available</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Complexity</strong></td>
+                            <td>Easy but restrictive</td>
+                            <td>Moderate (need 3rd party)</td>
+                            <td>Moderate with support</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Age Verification</strong></td>
+                            <td>Manual only</td>
+                            <td>Platform feature</td>
+                            <td>Supported</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Very limited use cases</td>
+                            <td>E-commerce with 3rd party processor</td>
+                            <td>Mobile inventory & party sales</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Find Your Best Fit</h2>
+            <p>Answer these questions to get a personalized recommendation:</p>
+            
+            <div class="quiz-section">
+                <form id="quizForm">
+                    <div class="quiz-question">
+                        <h3>1. What's your current business status?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="transitioning"> Transitioning from a legacy business model
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="new"> Brand new solopreneur
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="operating"> Currently operating independently
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>2. What's your primary sales method?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="parties"> Home parties / mobile inventory
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="retail"> Brick-and-mortar shop
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="ecommerce"> E-commerce only
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="mix"> Mix of all three
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>3. Expected monthly revenue volume?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="starting"> Just starting ($0-$5K/month)
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="growing"> Growing ($5K-$25K/month)
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="established"> Established ($25K+/month)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>4. Do you need mobile payment terminals?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q4" value="critical"> Yes, critical for my business
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q4" value="nice"> Nice to have but not essential
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q4" value="no"> No, online only
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>5. How important is fast funding?</h3>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q5" value="critical"> Critical - I need immediate cash flow
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q5" value="important"> Important but flexible
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q5" value="not"> Not a priority
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" onclick="calculateRecommendation()">Get My Recommendation</button>
+                </form>
+            </div>
+
+            <div id="recommendation" class="recommendation">
+                <h2>Your Recommended Processor</h2>
+                <div id="recommendationContent"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Next Steps</h2>
+            <div class="action-steps">
+                <h3>✅ Your Action Plan</h3>
+                <ol>
+                    <li><strong>Review your recommendation above</strong> based on your quiz results</li>
+                    <li><strong>Download this comparison</strong> to review with your business advisor</li>
+                    <li><strong>Gather required documents:</strong>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Business license or registration</li>
+                            <li>Tax ID (EIN)</li>
+                            <li>Bank account information</li>
+                            <li>Business website or social media presence</li>
+                        </ul>
+                    </li>
+                    <li><strong>Apply with your chosen processor</strong></li>
+                    <li><strong>Consider POS integration training</strong> through <a href="https://prosales.peppersparties.com" target="_blank">Pepper's Parties Academy</a></li>
+                    <li><strong>Set up your first successful payment!</strong></li>
+                </ol>
+            </div>
+
+            <div class="alert">
+                <strong>🎓 Want More Support?</strong><br>
+                Join Pepper's Parties Academy for comprehensive training on:
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Integrating Atrex POS with your website</li>
+                    <li>Optimizing payment flows for party sales</li>
+                    <li>Managing inventory and customer relationships</li>
+                    <li>Building your independent business from the ground up</li>
+                </ul>
+                <a href="https://prosales.peppersparties.com" target="_blank" style="color: #6B46C1; font-weight: 600; text-decoration: underline;">Learn more at Pepper's Parties Academy →</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Additional Resources</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="../business-discovery/" style="color: #6B46C1; font-weight: 500;">Complete the Business Discovery Form</a> - Comprehensive questionnaire to plan your business strategy</li>
+                <li><a href="https://peppersparties.com" target="_blank" style="color: #6B46C1; font-weight: 500;">Pepper's Parties Main Site</a> - Learn about Kathi's 29-year journey</li>
+                <li><a href="https://jmpepper.com" target="_blank" style="color: #6B46C1; font-weight: 500;">POS & Website Integration Training</a> - Technical training for seamless operations</li>
+                <li><a href="https://pepperspartiestoo.net" target="_blank" style="color: #6B46C1; font-weight: 500;">Spicy Boutique</a> - Shop curated products and access catalogs</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer style="background: #1f2937; color: white; padding: 2rem; text-align: center; margin-top: 3rem;">
+        <p>&copy; 2025 Pepper's Parties | Educationally Entertaining Since 1996</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">For adults 18+ only</p>
+    </footer>
+
+    <script>
+        // Add click handlers for quiz options
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove selected class from siblings
+                this.parentElement.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+            });
+        });
+
+        function calculateRecommendation() {
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            
+            // Check if all questions are answered
+            if (!formData.get('q1') || !formData.get('q2') || !formData.get('q3') || !formData.get('q4') || !formData.get('q5')) {
+                alert('Please answer all questions before getting your recommendation.');
+                return;
+            }
+
+            const answers = {
+                q1: formData.get('q1'),
+                q2: formData.get('q2'),
+                q3: formData.get('q3'),
+                q4: formData.get('q4'),
+                q5: formData.get('q5')
+            };
+
+            let recommendation = '';
+
+            // Decision logic
+            if (answers.q2 === 'parties' || answers.q2 === 'mix') {
+                // Parties or mixed = CWA
+                recommendation = `
+                    <h3>🎯 Recommended: CWA Merchant Services (via Pepper's Parties Partnership)</h3>
+                    <p style="margin: 1rem 0;">Based on your responses, CWA Merchant Services through the Pepper's Parties partnership is your best fit.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ Pros for Your Business:</h4>
+                            <ul>
+                                <li>Full adult product acceptance</li>
+                                <li>Free device placement upon approval</li>
+                                <li>Optimized for mobile/party sales</li>
+                                <li>Fast funding options available</li>
+                                <li>Dual pricing program to offset fees</li>
+                                <li>Pepper's Parties partnership support</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Considerations:</h4>
+                            <ul>
+                                <li>Requires underwriting approval</li>
+                                <li>May have setup/registration fees</li>
+                                <li>Need to maintain compliance standards</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Why This Fits:</strong> Your focus on ${answers.q2 === 'parties' ? 'party sales' : 'mixed sales channels'} makes CWA ideal. The free equipment, mobile optimization, and Pepper's Parties integration will streamline your operations.</p>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://prosales.peppersparties.com" target="_blank" class="btn">Learn About CWA Partnership →</a>
+                    </div>
+                `;
+            } else if (answers.q2 === 'ecommerce') {
+                // E-commerce = Shopify with third party
+                recommendation = `
+                    <h3>🎯 Recommended: Shopify Platform + Specialized Payment Processor</h3>
+                    <p style="margin: 1rem 0;">Based on your e-commerce focus, Shopify's platform with a third-party adult-friendly processor is your best path.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ Pros for Your Business:</h4>
+                            <ul>
+                                <li>Robust e-commerce platform</li>
+                                <li>Adult products allowed on platform</li>
+                                <li>Many third-party processor options</li>
+                                <li>Professional online presence</li>
+                                <li>Built-in marketing tools</li>
+                                <li>Scalable as you grow</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Considerations:</h4>
+                            <ul>
+                                <li>Cannot use Shopify Payments</li>
+                                <li>Need to find third-party processor</li>
+                                <li>Higher fees for adult products</li>
+                                <li>Monthly Shopify subscription</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Why This Fits:</strong> Your e-commerce focus needs a professional platform. Shopify offers the best features for online selling, though you'll need to integrate a specialized processor like CWA or similar for payments.</p>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://prosales.peppersparties.com" target="_blank" class="btn">Learn About Integration Options →</a>
+                    </div>
+                `;
+            } else {
+                // Retail = Consider options
+                recommendation = `
+                    <h3>🎯 Recommended: CWA Merchant Services or Specialized Retail Processor</h3>
+                    <p style="margin: 1rem 0;">Based on your brick-and-mortar focus, you need a processor with strong in-store capabilities and adult product acceptance.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4>✅ What You Need:</h4>
+                            <ul>
+                                <li>Traditional POS terminal</li>
+                                <li>Reliable in-person payments</li>
+                                <li>Adult product acceptance</li>
+                                <li>Potential for mobile backup</li>
+                                <li>Integration with inventory system</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4>⚠️ Considerations:</h4>
+                            <ul>
+                                <li>Equipment costs (unless free with CWA)</li>
+                                <li>Higher fees for adult products</li>
+                                <li>Need physical location verification</li>
+                                <li>Compliance requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Why This Fits:</strong> Your retail location needs reliable in-person processing. CWA offers free equipment placement, or explore other specialized adult product processors.</p>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://prosales.peppersparties.com" target="_blank" class="btn">Explore Your Options →</a>
+                    </div>
+                `;
+            }
+
+            document.getElementById('recommendationContent').innerHTML = recommendation;
+            document.getElementById('recommendation').classList.add('show');
+            
+            // Scroll to recommendation
+            document.getElementById('recommendation').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
