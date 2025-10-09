@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Manager for Email Marketers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #667eea;
+            text-align: center;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .workflow {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+        
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+        
+        .step {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .step p {
+            color: #666;
+        }
+        
+        .use-cases {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .use-case {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .use-case h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .use-case p {
+            color: #666;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .section h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.1rem;">📚 Email Marketing Toolkit</a>
+        <div style="display: flex; gap: 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: background 0.3s;">Home</a>
+            <a href="guide.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: background 0.3s;">Guide</a>
+            <a href="app.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: background 0.3s;">Prompt Diary</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>📚 AI Prompt Manager for Email Marketers</h1>
+        <p>Track, refine, and reuse your AI prompts to create better email campaigns faster</p>
+        <p class="subtitle">The perfect companion to "The Independent Professional's DIY Email Marketing Strategic Plan"</p>
+        <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+            <a href="guide.html" class="cta-button" style="background: white; color: #667eea;">Read the Guide</a>
+            <a href="app.html" class="cta-button">Launch Prompt Diary →</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Why You Need This</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; color: #666;">
+                As an independent professional executing the 4-phase email marketing workflow, you're using AI to write subject lines, craft compelling content, and optimize campaigns. But are you tracking what works?
+            </p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">✍️</div>
+                    <h3>Save Winning Prompts</h3>
+                    <p>Store your best AI prompts for subject lines, body copy, CTAs, and A/B tests. Never start from scratch again.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Track What Works</h3>
+                    <p>Log campaign results, conversion rates, and audience insights alongside the prompts that generated them.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Organize by Phase</h3>
+                    <p>Tag prompts by workflow phase: Strategy, Content Creation, A/B Testing, or Post-Campaign Analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="workflow">
+            <h2 style="text-align: center; margin-bottom: 20px;">Your Email Marketing AI Workflow</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: #666;">
+                Integrate AI prompts into every phase of your DIY email marketing process
+            </p>
+            
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Strategy & Setup</h3>
+                    <p>Use AI prompts to define objectives, create segmentation strategies, and draft technical documentation.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Content Creation</h3>
+                    <p>Generate compelling email copy, craft irresistible subject lines, and create persuasive CTAs with proven prompts.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>A/B Testing</h3>
+                    <p>Save prompts that generate high-performing variations for subject lines, content, and design elements.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Analysis & Iteration</h3>
+                    <p>Use AI to interpret campaign data, identify patterns, and generate actionable insights for your next campaign.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Real-World Use Cases</h2>
+            <div class="use-cases">
+                <div class="use-case">
+                    <h4>📧 Subject Line Generation</h4>
+                    <p><strong>Prompt:</strong> "Write 5 subject line variations for a home party invitation email. Make them personal, exciting, and highlight the convenience factor. Target audience: busy professionals aged 35-50."</p>
+                    <p><strong>Result:</strong> Version B ("Kathi's Back with Home Parties") achieved 23% higher click rate</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>🎯 Audience Segmentation Strategy</h4>
+                    <p><strong>Prompt:</strong> "Act as an email marketing strategist. Help me create a phased segmentation plan for my contact list of 7,400 subscribers. Start with 3 broad segments, then suggest how to refine based on engagement data."</p>
+                    <p><strong>Result:</strong> Clear 3-tier segmentation strategy ready for implementation</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>📊 Campaign Analysis</h4>
+                    <p><strong>Prompt:</strong> "Analyze these email campaign results: 28% open rate, 3.2% click rate, 1.1% conversion rate. My goal was 5% conversion. What insights can you provide and what should I test next?"</p>
+                    <p><strong>Result:</strong> Data-driven recommendations for next campaign optimization</p>
+                </div>
+                
+                <div class="use-case">
+                    <h4>✅ Quality Assurance Checklist</h4>
+                    <p><strong>Prompt:</strong> "Create a pre-send QA checklist for DIY email marketers. Include technical, content, and strategic items based on email marketing best practices."</p>
+                    <p><strong>Result:</strong> Comprehensive checklist preventing costly mistakes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Level Up Your Email Marketing?</h2>
+        <p>Start organizing your AI prompts today and turn every campaign into a learning opportunity</p>
+        <a href="app.html" class="cta-button">Get Started Free →</a>
+        <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">
+            ✅ Free forever • ✅ No signup required • ✅ Data stays in your browser
+        </p>
+    </div>
+</body>
+</html>

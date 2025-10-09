@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Prompt Diary</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 24px; }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 2.5rem; font-weight: bold; margin-bottom: 8px; }
+        .header p { opacity: 0.9; }
+        
+        .nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 16px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .nav-btn:hover { background: #e9ecef; }
+        .nav-btn.active { background: #007bff; color: white; }
+        
+        .content { padding: 32px; }
+        
+        .search-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+        
+        .filter-select {
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .prompt-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s;
+        }
+        
+        .prompt-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .content-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .content-type {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .platform {
+            background: #f3e5f5;
+            color: #7b1fa2;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .stars { color: #ffc107; }
+        
+        .prompt-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary { background: #007bff; color: white; }
+        .btn-primary:hover { background: #0056b3; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #545b62; }
+        .btn-copy { background: #28a745; color: white; }
+        .btn-copy:hover { background: #1e7e34; }
+        .btn-copy.copied { background: #20c997; }
+        .btn-edit { background: #fd7e14; color: white; }
+        .btn-edit:hover { background: #e55a00; }
+        
+        .prompt-text {
+            margin: 16px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: #f8f9fa;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .prompt-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group { margin-bottom: 24px; }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            background: #f8f9fa;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .checkbox-item label {
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .modal-close:hover { color: #333; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 64px 32px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .edit-mode-indicator {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ffeaa7;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .save-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .data-info {
+            background: #e7f3ff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 4px solid #007bff;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .search-bar, .form-grid, .prompt-meta, .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .prompt-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            nav {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <nav style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: bold; font-size: 1.1rem;">📚 Email Marketing Toolkit</a>
+        <div style="display: flex; gap: 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: background 0.3s;">Home</a>
+            <a href="guide.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; transition: background 0.3s;">Guide</a>
+            <a href="app.html" style="color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; background: rgba(255,255,255,0.2);">Prompt Diary</a>
+        </div>
+    </nav>
+
+    <div id="save-status" class="save-status"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>📚 Professional Prompt Diary</h1>
+                <p>Track, refine, and reuse your AI prompts for business success</p>
+            </div>
+            
+            <div class="nav">
+                <button class="nav-btn active" onclick="showTab('browse')">🔍 Browse Prompts</button>
+                <button class="nav-btn" onclick="showTab('add')">➕ Add Entry</button>
+                <button class="nav-btn" onclick="showTab('top')">⭐ Top Rated</button>
+                <button class="nav-btn" onclick="document.getElementById('import-file').click()" style="background: #6f42c1; color: white;">📥 Import</button>
+                <button class="nav-btn" onclick="exportToJSON()" style="background: #17a2b8; color: white;">📋 Export</button>
+            </div>
+            <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importFromJSON(event)">
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <div id="browse-tab" class="tab-content">
+                    <div id="data-info" class="data-info" style="display: none;"></div>
+                    <div class="search-bar">
+                        <input type="text" class="search-input" id="search-input" placeholder="Search prompts, content types, tags..." onkeyup="filterPrompts()">
+                        <select class="filter-select" id="filter-select" onchange="filterPrompts()">
+                            <option value="all">All Prompts</option>
+                            <option value="high-rated">High Rated (4+ stars)</option>
+                            <option value="recent">Recent</option>
+                        </select>
+                        <select class="filter-select" id="sort-select" onchange="filterPrompts()">
+                            <option value="date">Sort by Date</option>
+                            <option value="rating">Sort by Rating</option>
+                            <option value="type">Sort by Type</option>
+                            <option value="tags">Sort by Tags</option>
+                        </select>
+                    </div>
+                    <div id="prompts-container"></div>
+                </div>
+
+                <div id="add-tab" class="tab-content" style="display: none;">
+                    <div id="edit-mode-indicator" class="edit-mode-indicator" style="display: none;">
+                        ✏️ Editing Mode - Update your prompt entry
+                    </div>
+                    <h2 id="form-title" style="margin-bottom: 24px;">Add New Prompt Entry</h2>
+                    <div id="success-message" class="success-message" style="display: none;"></div>
+                    <div class="form">
+                        <div class="form-group">
+                            <label class="form-label">AI Prompt *</label>
+                            <textarea id="prompt-input" class="form-textarea" placeholder="Enter your AI prompt here..." required></textarea>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Content Types *</label>
+                                <div id="content-type-checkboxes" class="checkbox-group">
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-art" value="Art"><label for="ct-art">Art</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-spreadsheets" value="Spreadsheets"><label for="ct-spreadsheets">Spreadsheets</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-daily" value="Daily Operations"><label for="ct-daily">Daily Operations</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-persona" value="Persona"><label for="ct-persona">Persona</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-social" value="Social Media"><label for="ct-social">Social Media</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-marketing" value="Marketing & Advertising"><label for="ct-marketing">Marketing & Advertising</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-strategy" value="Strategic Planning"><label for="ct-strategy">Strategic Planning</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-data" value="Data Analysis"><label for="ct-data">Data Analysis</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-content" value="Content Creation"><label for="ct-content">Content Creation</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-customer" value="Customer Service"><label for="ct-customer">Customer Service</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-project" value="Project Management"><label for="ct-project">Project Management</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-sales" value="Sales & Lead Generation"><label for="ct-sales">Sales & Lead Generation</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-training" value="Training & Education"><label for="ct-training">Training & Education</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-legal" value="Legal & Compliance"><label for="ct-legal">Legal & Compliance</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-finance" value="Finance & Accounting"><label for="ct-finance">Finance & Accounting</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-hr" value="HR & Recruiting"><label for="ct-hr">HR & Recruiting</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-product" value="Product Development"><label for="ct-product">Product Development</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-tech" value="Technical Documentation"><label for="ct-tech">Technical Documentation</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="ct-other" value="Other"><label for="ct-other">Other</label></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Platforms Used</label>
+                                <div id="platform-checkboxes" class="checkbox-group">
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-claude" value="Claude" checked><label for="plat-claude">Claude</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-chatgpt" value="ChatGPT"><label for="plat-chatgpt">ChatGPT</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-copilot" value="Microsoft Copilot"><label for="plat-copilot">Microsoft Copilot</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-gemini" value="Gemini"><label for="plat-gemini">Gemini</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-perplexity" value="Perplexity"><label for="plat-perplexity">Perplexity</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="plat-other" value="Other"><label for="plat-other">Other</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Tags</label>
+                            <input type="text" id="tags-input" class="form-input" placeholder="marketing, analysis, strategy (comma-separated)">
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Target Audience</label>
+                                <input type="text" id="audience-input" class="form-input" placeholder="e.g., Marketing teams">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Conversions/Results</label>
+                                <input type="text" id="conversions-input" class="form-input" placeholder="e.g., 3 client proposals">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Campaign Results</label>
+                            <textarea id="campaign-results-input" class="form-textarea" placeholder="Describe campaign results..." style="min-height: 100px;"></textarea>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label" style="color: #28a745;">✅ What Worked</label>
+                                <textarea id="worked-input" class="form-textarea" style="min-height: 80px; background: #f8fff8;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="color: #fd7e14;">🔧 To Improve</label>
+                                <textarea id="improve-input" class="form-textarea" style="min-height: 80px; background: #fff8f0;"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Rating (1-5)</label>
+                            <select id="rating-input" class="form-select">
+                                <option value="1">1 Star</option>
+                                <option value="2">2 Stars</option>
+                                <option value="3" selected>3 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="5">5 Stars</option>
+                            </select>
+                        </div>
+                        
+                        <div style="display: flex; gap: 16px;">
+                            <button id="save-btn" class="btn btn-primary" onclick="saveEntry()" style="flex: 1; padding: 16px; font-size: 16px;">Save Entry</button>
+                            <button id="cancel-edit-btn" class="btn btn-secondary" onclick="cancelEdit()" style="display: none; padding: 16px; font-size: 16px;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="top-tab" class="tab-content" style="display: none;">
+                    <h2 style="margin-bottom: 24px;">⭐ Top Rated Prompts</h2>
+                    <div id="top-prompts-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detail-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_ENTRIES = [
+            {
+                id: 1,
+                prompt: "Act as a senior marketing strategist. Analyze the following customer feedback and provide 3 actionable insights for improving our product positioning. Focus on pain points and opportunities. Customer feedback: [INSERT FEEDBACK]",
+                contentTypes: ["Marketing & Advertising", "Data Analysis"],
+                platforms: ["Claude"],
+                targetAudience: "Product Marketing Teams",
+                rating: 5,
+                conversions: "3 strategy implementations",
+                campaignResults: "Implemented across 3 campaigns: 15% increase in customer satisfaction",
+                whatWorked: "Specific role definition and clear output format",
+                toImprove: "Could add competitive analysis component",
+                dateCreated: "2024-09-01",
+                tags: ["marketing", "analysis", "customer feedback"]
+            }
+        ];
+
+        let entries = [];
+        let currentEditId = null;
+
+        function loadData() {
+            const saved = localStorage.getItem('promptDiaryEntries');
+            if (saved) {
+                try {
+                    const loadedEntries = JSON.parse(saved);
+                    entries = Array.isArray(loadedEntries) && loadedEntries.length > 0 ? loadedEntries : [...DEFAULT_ENTRIES];
+                } catch (e) {
+                    entries = [...DEFAULT_ENTRIES];
+                }
+            } else {
+                entries = [...DEFAULT_ENTRIES];
+                localStorage.setItem('promptDiaryEntries', JSON.stringify(entries));
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('promptDiaryEntries', JSON.stringify(entries));
+            localStorage.setItem('promptDiaryLastSave', new Date().toISOString());
+        }
+
+        function showSaveStatus(message, isError = false) {
+            const statusDiv = document.getElementById('save-status');
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = isError ? '#f8d7da' : '#d4edda';
+            statusDiv.style.color = isError ? '#721c24' : '#155724';
+            statusDiv.style.border = `1px solid ${isError ? '#f5c6cb' : '#c3e6cb'}`;
+            setTimeout(() => statusDiv.style.display = 'none', 3000);
+        }
+
+        function init() {
+            loadData();
+            filterPrompts();
+            showTopPrompts();
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.target.classList.add('active');
+            
+            if (tabName !== 'add') cancelEdit();
+            if (tabName === 'browse') filterPrompts();
+            else if (tabName === 'top') showTopPrompts();
+        }
+
+        function getSelectedCheckboxes(containerId) {
+            const container = document.getElementById(containerId);
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function setSelectedCheckboxes(containerId, values) {
+            const container = document.getElementById(containerId);
+            container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = values.includes(cb.value);
+            });
+        }
+
+        function createStars(rating) {
+            return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+        }
+
+        function truncateText(text, maxLength) {
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }
+
+        function createPromptCard(entry) {
+            return `
+                <div class="prompt-card">
+                    <div class="prompt-header">
+                        <div>
+                            <div class="content-types">
+                                ${entry.contentTypes.map(type => `<span class="content-type">${type}</span>`).join('')}
+                            </div>
+                            <div class="rating">
+                                <span class="stars">${createStars(entry.rating)}</span>
+                                <span>(${entry.rating}/5)</span>
+                            </div>
+                            <div class="platforms">
+                                ${entry.platforms.map(platform => `<span class="platform">${platform}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="btn btn-copy" onclick="copyPrompt('${entry.id}', this)">📋 Copy</button>
+                            <button class="btn btn-edit" onclick="editEntry(${entry.id})">✏️ Edit</button>
+                            <button class="btn btn-primary" onclick="showDetail(${entry.id})">👁️ View</button>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-text">${truncateText(entry.prompt, 200)}</div>
+                    
+                    ${entry.campaignResults ? `<div style="background: #e7f3ff; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #007bff;">
+                        <strong>Campaign Results:</strong> ${truncateText(entry.campaignResults, 150)}
+                    </div>` : ''}
+                    
+                    <div class="tags">
+                        ${entry.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div class="prompt-meta">
+                        <div><strong>Audience:</strong> ${entry.targetAudience || 'Not specified'}</div>
+                        <div><strong>Results:</strong> ${entry.conversions || 'Not specified'}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateDataInfo() {
+            const dataInfo = document.getElementById('data-info');
+            if (entries.length > 0) {
+                const lastSave = localStorage.getItem('promptDiaryLastSave');
+                const lastSaveDate = lastSave ? new Date(lastSave).toLocaleString() : 'Never';
+                dataInfo.innerHTML = `📊 <strong>${entries.length}</strong> prompts saved | Last saved: ${lastSaveDate}`;
+                dataInfo.style.display = 'block';
+            }
+        }
+
+        function filterPrompts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filterType = document.getElementById('filter-select').value;
+            const sortBy = document.getElementById('sort-select').value;
+            
+            let filteredEntries = entries.filter(entry => {
+                const matchesSearch = entry.prompt.toLowerCase().includes(searchTerm) ||
+                    entry.contentTypes.some(type => type.toLowerCase().includes(searchTerm)) ||
+                    entry.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                
+                const matchesFilter = filterType === 'all' || 
+                    (filterType === 'high-rated' && entry.rating >= 4) ||
+                    (filterType === 'recent' && new Date(entry.dateCreated) > new Date(Date.now() - 7*24*60*60*1000));
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            filteredEntries.sort((a, b) => {
+                switch(sortBy) {
+                    case 'rating': return b.rating - a.rating;
+                    case 'date': return new Date(b.dateCreated) - new Date(a.dateCreated);
+                    case 'type': return a.contentTypes[0].localeCompare(b.contentTypes[0]);
+                    case 'tags':
+                        const aTag = a.tags.length > 0 ? a.tags[0].toLowerCase() : 'zzz';
+                        const bTag = b.tags.length > 0 ? b.tags[0].toLowerCase() : 'zzz';
+                        return aTag.localeCompare(bTag);
+                    default: return 0;
+                }
+            });
+            
+            const container = document.getElementById('prompts-container');
+            container.innerHTML = filteredEntries.length === 0 
+                ? `<div class="empty-state"><h3>No prompts found</h3></div>`
+                : filteredEntries.map(createPromptCard).join('');
+            
+            updateDataInfo();
+        }
+
+        function showTopPrompts() {
+            const topEntries = entries.filter(entry => entry.rating >= 4).sort((a, b) => b.rating - a.rating);
+            const container = document.getElementById('top-prompts-container');
+            container.innerHTML = topEntries.length === 0 
+                ? `<div class="empty-state"><h3>No top-rated prompts yet</h3></div>`
+                : topEntries.map(createPromptCard).join('');
+        }
+
+        function copyPrompt(id, button) {
+            const entry = entries.find(e => e.id == id);
+            if (entry) {
+                navigator.clipboard.writeText(entry.prompt).then(() => {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '✅ Copied!';
+                    button.classList.add('copied');
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        }
+
+        function editEntry(id) {
+            const entry = entries.find(e => e.id == id);
+            if (!entry) return;
+            
+            currentEditId = id;
+            
+            document.getElementById('add-tab').style.display = 'block';
+            document.getElementById('browse-tab').style.display = 'none';
+            document.getElementById('top-tab').style.display = 'none';
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[onclick="showTab(\'add\')"]').classList.add('active');
+            
+            document.getElementById('edit-mode-indicator').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Edit Prompt Entry';
+            document.getElementById('save-btn').textContent = 'Update Entry';
+            document.getElementById('cancel-edit-btn').style.display = 'block';
+            
+            document.getElementById('prompt-input').value = entry.prompt;
+            setSelectedCheckboxes('content-type-checkboxes', entry.contentTypes);
+            setSelectedCheckboxes('platform-checkboxes', entry.platforms);
+            document.getElementById('audience-input').value = entry.targetAudience || '';
+            document.getElementById('conversions-input').value = entry.conversions || '';
+            document.getElementById('tags-input').value = entry.tags.join(', ');
+            document.getElementById('campaign-results-input').value = entry.campaignResults || '';
+            document.getElementById('worked-input').value = entry.whatWorked || '';
+            document.getElementById('improve-input').value = entry.toImprove || '';
+            document.getElementById('rating-input').value = entry.rating;
+        }
+
+        function cancelEdit() {
+            currentEditId = null;
+            document.getElementById('prompt-input').value = '';
+            setSelectedCheckboxes('content-type-checkboxes', []);
+            setSelectedCheckboxes('platform-checkboxes', ['Claude']);
+            document.getElementById('audience-input').value = '';
+            document.getElementById('conversions-input').value = '';
+            document.getElementById('tags-input').value = '';
+            document.getElementById('campaign-results-input').value = '';
+            document.getElementById('worked-input').value = '';
+            document.getElementById('improve-input').value = '';
+            document.getElementById('rating-input').selectedIndex = 2;
+            
+            document.getElementById('edit-mode-indicator').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Add New Prompt Entry';
+            document.getElementById('save-btn').textContent = 'Save Entry';
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        function showDetail(id) {
+            const entry = entries.find(e => e.id == id);
+            if (!entry) return;
+            
+            document.getElementById('modal-body').innerHTML = `
+                <h2 style="margin-bottom: 16px;">${entry.contentTypes.join(', ')}</h2>
+                <div class="rating" style="margin-bottom: 24px;">
+                    <span class="stars">${createStars(entry.rating)}</span>
+                    <span>(${entry.rating}/5)</span>
+                </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+                    <p style="white-space: pre-wrap; line-height: 1.6;">${entry.prompt}</p>
+                </div>
+                ${entry.campaignResults ? `<div style="background: #e7f3ff; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+                    <h3>Campaign Results</h3>
+                    <p style="white-space: pre-wrap;">${entry.campaignResults}</p>
+                </div>` : ''}
+                <div style="margin-top: 24px; text-align: center;">
+                    <button class="btn btn-edit" onclick="closeModal(); editEntry(${entry.id})">✏️ Edit</button>
+                </div>
+            `;
+            
+            document.getElementById('detail-modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.remove('show');
+        }
+
+        function saveEntry() {
+            const prompt = document.getElementById('prompt-input').value.trim();
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+            
+            const contentTypes = getSelectedCheckboxes('content-type-checkboxes');
+            if (contentTypes.length === 0) {
+                alert('Please select at least one content type');
+                return;
+            }
+            
+            const platforms = getSelectedCheckboxes('platform-checkboxes');
+            if (platforms.length === 0) {
+                alert('Please select at least one platform');
+                return;
+            }
+            
+            const entryData = {
+                prompt: prompt,
+                contentTypes: contentTypes,
+                platforms: platforms,
+                targetAudience: document.getElementById('audience-input').value,
+                conversions: document.getElementById('conversions-input').value,
+                campaignResults: document.getElementById('campaign-results-input').value,
+                whatWorked: document.getElementById('worked-input').value,
+                toImprove: document.getElementById('improve-input').value,
+                rating: parseInt(document.getElementById('rating-input').value),
+                tags: document.getElementById('tags-input').value.split(',').map(tag => tag.trim()).filter(tag => tag)
+            };
+            
+            if (currentEditId) {
+                const entryIndex = entries.findIndex(e => e.id == currentEditId);
+                if (entryIndex !== -1) {
+                    entries[entryIndex] = { ...entries[entryIndex], ...entryData };
+                }
+            } else {
+                const newEntry = {
+                    id: Date.now(),
+                    ...entryData,
+                    dateCreated: new Date().toISOString().split('T')[0]
+                };
+                entries.unshift(newEntry);
+            }
+            
+            saveData();
+            showSaveStatus(currentEditId ? '✅ Prompt updated!' : '✅ Prompt saved!');
+            cancelEdit();
+            filterPrompts();
+            showTopPrompts();
+        }
+
+        function exportToJSON() {
+            const jsonContent = JSON.stringify(entries, null, 2);
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `prompt-diary-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            showSaveStatus('✅ JSON exported!');
+        }
+        
+        function importFromJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(importedData)) {
+                        alert('Invalid JSON format');
+                        return;
+                    }
+                    
+                    const validEntries = importedData.filter(entry => 
+                        entry.prompt && entry.contentTypes && entry.platforms
+                    );
+                    
+                    if (validEntries.length === 0) {
+                        alert('No valid entries found');
+                        return;
+                    }
+                    
+                    if (confirm(`Import ${validEntries.length} entries?\nOK = Replace all\nCancel = Merge`)) {
+                        entries = validEntries;
+                    } else {
+                        const existingIds = new Set(entries.map(e => e.id));
+                        const newEntries = validEntries.filter(e => !existingIds.has(e.id));
+                        entries = [...entries, ...newEntries];
+                    }
+                    
+                    saveData();
+                    filterPrompts();
+                    showTopPrompts();
+                    showSaveStatus(`✅ Imported ${validEntries.length} entries!`);
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                }
+            };
+            
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detail-modal');
+            if (event.target === modal) closeModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
